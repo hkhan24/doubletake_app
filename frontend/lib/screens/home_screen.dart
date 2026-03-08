@@ -35,6 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
         _newsPair = pair;
         _isLoading = false;
       });
+
+      if (pair['isCachedFallback'] == true && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Using Cached Perspectives', style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.orangeAccent,
+            duration: Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     } catch (e) {
       setState(() {
         _errorMessage = e.toString();
