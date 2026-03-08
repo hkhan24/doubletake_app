@@ -138,7 +138,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final westernArticle = _newsPair!['sourceA'];
     final nonWesternArticle = _newsPair!['sourceB'];
     final topic = _newsPair!['topic'] ?? 'Daily Event';
-    final isMock = _newsPair!['isMock'] == true;
     final insight = _newsPair!['insight'];
 
     return Padding(
@@ -167,21 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     letterSpacing: 2,
                   ),
                 ),
-                if (isMock) ...[
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.orange.withOpacity(0.5)),
-                    ),
-                    child: Text(
-                      'DEVELOPMENT MOCK DATA',
-                      style: GoogleFonts.inter(color: Colors.orangeAccent, fontSize: 10, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ]
               ],
             ),
           ),

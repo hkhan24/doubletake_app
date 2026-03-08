@@ -11,23 +11,6 @@ const DEFAULT_TOPICS = [
     "international trade", "global health"
 ];
 
-const MOCK_DATA_POOL = [
-    {
-        topic: "Global Economy",
-        western: {
-            title: "Global Markets Rally Amid Positive Economic Data",
-            source: { name: "Reuters" },
-            description: "Stocks in major Western markets saw a significant uplift today as consumer confidence indexes surpassed expectations.",
-            urlToImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop"
-        },
-        non_western: {
-            title: "Asian Exchanges Show Cautious Optimism on Trade News",
-            source: { name: "Al Jazeera English" },
-            description: "Observers note a steady start to the trading day in key Asian financial hubs following recent trade negotiations.",
-            urlToImage: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=2070&auto=format&fit=crop"
-        }
-    }
-];
 
 function formatGdeltArticle(article) {
     if (!article) return null;
@@ -99,17 +82,8 @@ async function getNewsPair(topicQuery) {
             throw new Error("Could not find a valid live pair from GDELT for this topic.");
         }
     } catch (e) {
-        console.error("GDELT API Fetch Error, falling back to mock:", e.message);
-        const randomMock = MOCK_DATA_POOL[0];
-        // Overwrite topic to make it clear we fell back
-        return {
-            topic: searchTopic + " (MOCK FALLBACK)",
-            sourceA: randomMock.western,
-            sourceB: randomMock.non_western,
-            insight: "Source A emphasizes market positivity, while Source B utilizes more cautious regional terminology.",
-            isMock: true,
-            error: e.message
-        };
+        console.error("GDELT API Fetch Error:", e.message);
+        throw new Error("Live Feed Connection Error: Failed to retrieve perspectives from GDELT. " + e.message);
     }
 }
 

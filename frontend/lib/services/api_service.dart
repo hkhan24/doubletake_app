@@ -10,7 +10,14 @@ class ApiService {
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('Failed to load news pair (Status \${response.statusCode})');
+        String errMsg = 'Failed to load news pair (Status ${response.statusCode})';
+        try {
+          final decoded = json.decode(response.body);
+          if (decoded['error'] != null) {
+            errMsg = decoded['error'];
+          }
+        } catch (_) {}
+        throw Exception(errMsg);
       }
     } catch (e) {
       throw Exception('Error fetching news pair: $e');
